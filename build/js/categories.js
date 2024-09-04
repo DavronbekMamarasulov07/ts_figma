@@ -12,7 +12,7 @@ const categoriesC = document.getElementById("categoroies");
 const search_btnC = document.getElementById("search_btn");
 const search_formC = document.getElementById("search_form");
 search_btnC.addEventListener("click", () => {
-    search_formC.classList.toggle("show_input");
+    search_formC.classList.add("show_input");
 });
 showCategoriesC.addEventListener("click", () => {
     categoryContentC.classList.toggle("show");

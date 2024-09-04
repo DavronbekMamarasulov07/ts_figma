@@ -9,7 +9,7 @@ const search_btn = document.getElementById("search_btn");
 const search_form = document.getElementById("search_form");
 const toTop = document.getElementById("to_top");
 search_btn.addEventListener("click", () => {
-    search_form.classList.toggle("show_input");
+    search_form.classList.add("show_input");
 });
 show_categories.addEventListener("click", () => {
     category_content.classList.toggle("show");

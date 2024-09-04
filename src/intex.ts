@@ -18,7 +18,7 @@ const toTop = document.getElementById("to_top") as HTMLDivElement;
 
 
 search_btn.addEventListener("click", () => {
-  search_form.classList.toggle("show_input");
+  search_form.classList.add("show_input");
 });
 
 show_categories.addEventListener("click", () => {

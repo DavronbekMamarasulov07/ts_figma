@@ -21,7 +21,7 @@ const search_btnC = document.getElementById("search_btn") as HTMLButtonElement;
 const search_formC = document.getElementById("search_form") as HTMLInputElement;
 
 search_btnC.addEventListener("click", () => {
-  search_formC.classList.toggle("show_input");
+  search_formC.classList.add("show_input");
 });
 
 showCategoriesC.addEventListener("click", () => {
