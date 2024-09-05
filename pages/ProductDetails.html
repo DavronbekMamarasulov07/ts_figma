@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Categories</title>
+  <link rel="stylesheet" href="../../build/style/header.css" />
+  <link rel="stylesheet" href="../../src/output.css" />
+  <link rel="stylesheet" href="../../build/style/main.css">
+</head>
+
+<body class="flex flex-col min-h-screen">
+  <header id="header" class="shadow-lg bg-[#f7f7f7] overflow-hidden fixed top-0 z-40 w-full">
+    <div class="container">
+      <div class="header w-full py-5 flex items-center justify-between px-5">
+        <div class="flex items-center gap-5">
+          <a href="../index.html">
+            <h2 class="text-2xl font-semibold">DM-Shop</h2>
+          </a>
+          <button id="show_categories" class="flex items-center gap-1 border border-gray-400 px-3 py-1">
+            Categories
+            <img width="20" id="arrow" src="../../images/arrow.png" alt="arrow" />
+          </button>
+        </div>
+        <ul class="flex items-center gap-5">
+          <li class="transition-transform border-b border-transparent hover:border-black">
+            <a href="../index.html">Home</a>
+          </li>
+        </ul>
+        <div class="flex items-center justify-end gap-3 w-[250px]">
+          <div class="overflow-hidden flex items-center gap-2">
+            <form id="search_form" class="search_form">
+              <input id="search_input" type="text" class="border-b border-gray-300 outline-none bg-transparent"
+                placeholder="Search..." />
+            </form>
+          </div>
+          <button type="submit" id="search_btn">
+            <img width="20" src="../../images/search.svg" alt="search" />
+          </button>
+          <img src="../../images/like.svg" alt="like" />
+        </div>
+      </div>
+    </div>
+  </header>
+  <div class="bg-gray-200 ">
+    <div class="container overflow-hidden">
+      <div id="category_content" class="category_content">
+        <h2 class="text-center text-4xl font-semibold pb-[50px] underline">
+          Categories
+        </h2>
+        <div class="categoroies" id="categoroies"></div>
+      </div>
+    </div>
+  </div>
+  <main class="my-[100px] flex-grow" id="main">
+
+    <section id="categories">
+      <div class="container">
+        <div class="flex flex-col ">
+          <h2 class="text-4xl font-bold mt-10 mb-10"> Product Details</h2>
+          <!-- <div id="loading" class="text-center h-screen text-3xl   flex-1  w-full">Loading...</div> -->
+          <div id="categories_content" class="bg-white   rounded-lg shadow-lg overflow-hidden  px-10 py-5 h-[580px]"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer id="footer" class="bg-neutral-900 text-white pt-[100px] pb-[50px] ">
+    <div class="container">
+      <div class="flex justify-between items-center">
+        <h3 class="text-2xl font-semibold">DM-Shop</h3>
+        <ul class="flex items-center gap-10">
+          <li class="transition-transform border-b border-transparent font-thin">
+            <a href="../index.html">Home</a>
+          </li>
+          <li class="transition-transform border-b border-transparent font-thin">
+            <a href="#products">Product</a>
+          </li>
+          <li class="transition-transform border-b border-transparent font-thin">
+            <a href="#featured">Featured</a>
+          </li>
+          <li class="transition-transform border-b border-transparent font-thin">
+            <a href="#contact">Contact</a>
+          </li>
+
+        </ul>
+      </div>
+      <div class="mt-[50px] mb-3 w-full h-[1px] bg-gray-300"></div>
+      <div class="flex justify-between items-center">
+        <div class="flex items-center gap-5">
+          <span class="text-sm text-gray-300">© 2022 DM-Shop. All rights reserved</span>
+          <span>Privacy Policy</span>
+          <span>Terms and Conditions</span>
+        </div>
+        <div class="flex items-center gap-5">
+          <a href="https://www.instagram.com/"><img src="../images/instagram.png" alt="instagram" /></a>
+          <a href="https://www.facebook.com/"><img src="../images/facebook.png" alt="facebook" /></a>
+          <a href="https://www.youtube.com/"><img src="../images/youtube.png" alt="youtube" /></a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>var exports = {};</script>
+  <script src="../../build/js/productDetails.js"></script>
+
+</body>
+
+</html>

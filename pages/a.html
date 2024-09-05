@@ -1,0 +1,194 @@
+<!-- "use client";
+import { AiFillHeart, AiOutlineHeart, AiOutlinePlus } from "react-icons/ai";
+import { AiOutlineMinus } from "react-icons/ai";
+import { BsFillCalendarDateFill } from "react-icons/bs";
+import { AiOutlineMessage } from "react-icons/ai";
+import { FaUserAlt } from "react-icons/fa";
+import Image from "next/image";
+import { useState } from "react";
+import RenderRating from "../rating/Rating";
+import { notFound } from "next/navigation";
+import Link from "next/link";
+import { message } from "antd";
+import "./ProductView.css"
+import { useDispatch, useSelector } from "react-redux";
+import { addToLiked } from "@/lib/slice/likeSlice";
+import { addToCart } from "@/lib/slice/cartSlice";
+
+const ProductView = ({ product }) => {
+const [show, setShow] = useState(false);
+const [quantity, setQuantity] = useState(1);
+const { likedProduct } = useSelector((state) => state.liked)
+const dispatch = useDispatch()
+
+
+if (!product) {
+notFound()
+}
+
+const toggleShow = () => {
+setShow(!show);
+}
+
+
+const handleQuantityIncrement = () => {
+if(quantity < product?.stock){ setQuantity(quantity + 1) } else{ message.success("Not added more than in stock!") } }
+  const handleQuantityDecrement=()=> {
+  if(quantity > 1){
+  setQuantity(quantity - 1)
+  }
+  else{
+  message.error("Quantity cannot be less than 1!")
+
+  }
+  }
+
+  const isProductLiked = (productId) => {
+  return likedProduct?.some((product) => product.id === productId);
+  };
+
+  const handleAddToCart = (product, quantity) => {
+  dispatch(addToCart({ ...product, quantity }));
+  message.success(`${product.title} added to cart`);
+  setQuantity(1)
+  };
+
+
+  const toggleLike = (product) => {
+  dispatch(addToLiked(product))
+  if(isProductLiked(product?.id)){
+  message.error(`${product.title} removed from liked`)
+  }
+  else{
+  message.success(`${product.title} added to liked`)
+  }
+  }
+
+
+  const discountPrice = (product.price - (product.price * product.discountPercentage) / 100).toFixed(2)
+
+
+  return (
+  <div className="max-w-[1100px]  mt-[100px]">
+    <Link href={"/"} className="text-4xl font-bold text-gray-800 mb-4 block">Product Detail </Link>
+    <div className="flex flex-col gap-6 ">
+      <div className="bg-slate-100   rounded-lg shadow-lg overflow-hidden  px-10 py-5">
+        <div className="flex items-center justify-center overflow-hidden">
+          <div className="w-1/2 p-4  h-[500px]">
+            <Image src={product.thumbnail} alt={product.title}
+              className=" products-image object-cover rounded-lg shadow-md bg-black" priority width={300}
+              height={200} />
+          </div>
+
+          <div className="w-1/2 p-4">
+            <div className="flex items-center justify-between mb-5">
+              <h2 className="text-3xl font-bold text-gray-800 ">
+                {product.title}
+              </h2>
+              
+            </div>
+            <p className="text-gray-600 mb-4">{product.description}</p>
+            <div className="flex items-center justify-between mb-4">
+              <div>
+                <span className="text-xl font-bold text-gray-800 ">
+                  ${discountPrice}
+                </span>{" "}
+                <span className="text-gray-600 mr-1">/</span>
+                <span className="text-lg font-bold text-red-500 line-through ">
+                  ${product.price}
+                </span>
+              </div>
+              <span className="text-sm text-gray-500">
+                {product.availabilityStatus}
+              </span>
+            </div>
+            <div className="text-gray-700 mb-4">
+              <div>
+                <strong>Category:</strong> {product.category}
+              </div>
+              <div>
+                <strong>Brand:</strong> {product.brand}
+              </div>
+              <div>
+                <strong>Stock:</strong> {product.stock}
+              </div>
+              <div>
+                <strong>Warranty:</strong> {product.warrantyInformation}
+              </div>
+              <div>
+                <strong>Shipping:</strong> {product.shippingInformation}
+              </div>
+              <div>
+                <strong>Return Policy:</strong> {product.returnPolicy}
+              </div>
+              <div>
+                <strong>Minimum Order Quantity:</strong>{" "}
+                {product.minimumOrderQuantity}
+              </div>
+              <div className="mt-4">
+                <strong>Rating: <span className="text-yellow-500 mr-2">{product.rating}</span></strong>
+                (<span onClick={()=> toggleShow()} className="underline ">{product.reviews?.length} reviews</span>)
+              </div>
+            </div>
+            <div className="flex items-center justify-between">
+              <div className=" flex items-center justify-between  w-[140px] bg-slate-200 px-6 py-2 gap-4 rounded-xl">
+                <button>
+                  <AiOutlineMinus className="text-xl" onClick={()=> handleQuantityDecrement()} />
+                </button>
+                <span>{quantity}</span>
+                <button disabled={quantity===product?.stock}>
+                  <AiOutlinePlus className="text-xl" onClick={()=> handleQuantityIncrement()} />
+                </button>
+              </div>
+              <button onClick={()=> handleAddToCart(product, quantity)} className=" px-8 bg-slate-700 text-white py-2
+                rounded-lg hover:bg-slate-600 focus:outline-none focus:ring-2 focus:ring-slate-500
+                focus:ring-opacity-50">
+                <span className="underline text-green-500 mr-2">$({(discountPrice * quantity).toFixed(2)})</span> Add to
+                Cart
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className=" overflow-hidden">
+        <div style={{ transform: show ? "translateY(0)" : "translateY(-100%)" , transition: "transform 0.5s ease" }}
+          className="bg-gray-200 mb-6 overflow-hidden rounded-lg ">
+          <div className="px-6 pt-8 pb-4 shadow-xl">
+            <h3 className="text-xl font-semibold text-gray-800 mb-4  ">
+              Customer Reviews
+            </h3>
+            <div className="flex items-center justify-between px-10 mt-4">
+              {product.reviews?.length > 0 ? (
+              product.reviews.map((review, index) => (
+              <div key={index} className="border-b border-gray-400 pb-4 mb-4 flex flex-col items-start gap-1 ">
+                <div className="flex items-center gap-2  mb-2">
+                  <span className="text-gray-600 text-sm flex items-center gap-2">
+                    <FaUserAlt /> {review.reviewerName}
+                  </span>
+                  <span className="text-yellow-500">
+                    <RenderRating rate={review.rating} />
+                  </span>
+
+                </div>
+                <p className="text-gray-700 mb-2 flex items-center gap-2">
+                  <AiOutlineMessage /> {review.comment}
+                </p>
+                <p className="text-gray-500 text-xs flex items-center gap-2">
+                  <BsFillCalendarDateFill className="text-base" /> Reviewed on {new
+                  Date(review.date).toLocaleDateString()}
+                </p>
+              </div>
+              ))
+              ) : (
+              <p className="text-gray-500">No reviews yet.</p>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  );
+  };
+
+  export default ProductView; -->
